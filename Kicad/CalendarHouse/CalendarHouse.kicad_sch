@@ -3025,6 +3025,10 @@
 		(uuid "10dd6f07-0478-4e00-b3c6-866a90f8def6")
 	)
 	(no_connect
+		(at 105.41 78.74)
+		(uuid "652892ff-f237-4a15-91f0-663d77962e50")
+	)
+	(no_connect
 		(at 96.52 86.36)
 		(uuid "655eb095-35f2-416c-b990-faf423737e2e")
 	)
@@ -3055,6 +3059,10 @@
 	(no_connect
 		(at 55.88 50.8)
 		(uuid "958db406-2477-4217-a194-071147b3a9ab")
+	)
+	(no_connect
+		(at 96.52 78.74)
+		(uuid "c54a491e-c67c-4d3c-b3c0-565effa8e529")
 	)
 	(no_connect
 		(at 55.88 58.42)
@@ -3139,6 +3147,16 @@
 			(type default)
 		)
 		(uuid "0bc7f734-d0f6-4454-a1b0-a0c80cf87a6c")
+	)
+	(polyline
+		(pts
+			(xy 96.52 102.87) (xy 105.41 81.28)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "0c5879e4-34c9-44dd-ae14-fe4825c8d5d4")
 	)
 	(wire
 		(pts
@@ -4052,16 +4070,6 @@
 	)
 	(wire
 		(pts
-			(xy 96.52 78.74) (xy 105.41 78.74)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "db53b916-de82-45d0-a782-7c732f1d002c")
-	)
-	(wire
-		(pts
 			(xy 171.45 26.67) (xy 171.45 27.94)
 		)
 		(stroke
@@ -4361,6 +4369,16 @@
 			(justify right bottom)
 		)
 		(uuid "a4173baa-d5fc-4fce-945c-c9a553fc8e63")
+	)
+	(text "Can swap LED EN and BTN IN\n(Will not do now due to my setup)"
+		(exclude_from_sim no)
+		(at 80.01 104.14 0)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "1ff6f84a-277f-49da-ae68-bf54c605240f")
 	)
 	(label "LD KAL"
 		(at 259.08 36.83 0)
