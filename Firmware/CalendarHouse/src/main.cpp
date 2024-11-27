@@ -1,65 +1,54 @@
 
 #include "board.h"
 #include "sd_card.h"
-
-#include "Adafruit_TLC5947.h"
+#include "cal_led.h"
 
 SDCardManager sdCardManager;
+CAL_LED cal_led;
 
-// How many boards do you have chained?
-#define NUM_TLC5947 1
-
-#define data   PIN_CAL_LED_MOSI
-#define clock   PIN_CAL_LED_CLK
-#define latch   PIN_CAL_LED_CS
-#define oe  PIN_CAL_LED_EN  // set to -1 to not use the enable pin (its optional)
-
-Adafruit_TLC5947 tlc = Adafruit_TLC5947(NUM_TLC5947, clock, data, latch);
+int16_t l0 = 0;
+int16_t l2 = 1365;
+int16_t l1 = 2730;
+int16_t inc0 = 123;
+int16_t inc2 = 51;
+int16_t inc1 = 237;
 
 void setup() {
   
   Serial.begin(115200);
   sdCardManager.begin();
+  cal_led.begin();
 
   while (!Serial) {
     delay(10);
   }
 
-  uint8_t cardType = SD.cardType();
-
-  if (sdCardManager.isCardPresent()) {
+  if (!sdCardManager.isCardPresent()) {
     Serial.println("No SD card attached");
   }
-
-  uint64_t cardSize = sdCardManager.cardSizeMB();
-  Serial.printf("SD Card Size: %lluMB\n", cardSize);
-  sdCardManager.writeFile("/hello.txt", "Hello World!\n");
-  Serial.printf("Total space: %lluMB\n", SD.totalBytes() / (1024 * 1024));
-  Serial.printf("Used space: %lluMB\n", SD.usedBytes() / (1024 * 1024));
+  else {
+    uint64_t cardSize = sdCardManager.cardSizeMB();
+    Serial.printf("SD Card Size: %lluMB\n", sdCardManager.cardSizeMB());
+    sdCardManager.writeFile("/hello.txt", "Hello World!\n");
+    Serial.printf("Total space: %lluMB\n", sdCardManager.totalSpaceMB());
+    Serial.printf("Used space: %lluMB\n", sdCardManager.usedSpaceMB());
+  }
   
   Serial.println("TLC5947 test");
-  tlc.begin();
-  if (oe >= 0) {
-    pinMode(oe, OUTPUT);
-    digitalWrite(oe, LOW);
-  }
-}
-
-
-// Fill the dots one after the other with a color
-void colorWipe(uint16_t r, uint16_t g, uint16_t b, uint8_t wait) {
-  for(uint16_t i=0; i<8*NUM_TLC5947; i++) {
-      tlc.setLED(i, r, g, b);
-      tlc.write();
-      delay(wait);
-  }
 }
 
 void loop() {
-  colorWipe(4095, 0, 0, 100); // "Red" (depending on your LED wiring)
-  delay(200);
-  colorWipe(0, 4095, 0, 100); // "Green" (depending on your LED wiring)
-  delay(200);
-  colorWipe(0, 0, 4095, 100); // "Blue" (depending on your LED wiring)
-  delay(200);
+  l0 += inc0;
+  l1 += inc1;
+  l2 += inc2;
+
+  if (l0 > 0xFFF) { l0 = 0xFFF; inc0 = -inc0; } else if (l0 < 0) { l0 = 0; inc0 = -inc0; }
+  if (l1 > 0xFFF) { l1 = 0xFFF; inc1 = -inc1; } else if (l1 < 0) { l1 = 0; inc1 = -inc1; }
+  if (l2 > 0xFFF) { l2 = 0xFFF; inc2 = -inc2; } else if (l2 < 0) { l2 = 0; inc2 = -inc2; }
+
+  cal_led.setPWM(0, l0);
+  cal_led.setPWM(1, l1);
+  cal_led.setPWM(2, l2);
+  cal_led.write();
+  delay(50);
 }

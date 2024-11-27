@@ -2,11 +2,12 @@
 #include "sd_card.h"
 #include <SPI.h>
 
-SDCardManager::SDCardManager() : _spi(HSPI), _sdfs(SD) {}
+SDCardManager::SDCardManager() : _spi(SD_SPI), _sdfs(SD) {}
 
 bool SDCardManager::begin() {
-  _spi.begin(PIN_SD_CLK, PIN_SD_MISO, PIN_SD_MOSI, PIN_SD_CS);
-  return _sdfs.begin(PIN_SD_CS, _spi);
+  _spi.begin(SD_PIN_CLK, SD_PIN_MISO, SD_PIN_MOSI, SD_PIN_CS);
+  pinMode(_spi.pinSS(), OUTPUT);
+  return _sdfs.begin(SD_PIN_CS, _spi);
 }
 
 bool SDCardManager::isCardPresent() const {

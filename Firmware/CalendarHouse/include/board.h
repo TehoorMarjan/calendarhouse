@@ -11,17 +11,19 @@
 // SD Card
 #define SD_SPI              (HSPI)
 
-#define PIN_SD_CS           (15)
-#define PIN_SD_MISO         (12)
-#define PIN_SD_MOSI         (13)
-#define PIN_SD_CLK          (14)
+#define SD_PIN_CS           (15)
+#define SD_PIN_MISO         (12)
+#define SD_PIN_MOSI         (13)
+#define SD_PIN_CLK          (14)
 
 // PWM LED Controller
 #define CAL_LED_SPI         (VSPI)
+#define CAL_LED_FREQ        (30000000) // Use 15000000 if chaining modules
+#define CAL_LED_NBCHAIN     (1)
 
-#define PIN_CAL_LED_CS      (19)
-#define PIN_CAL_LED_MOSI    (23)
-#define PIN_CAL_LED_CLK     (18)
-#define PIN_CAL_LED_EN      (35)
+#define CAL_LED_PIN_CS      (19)
+#define CAL_LED_PIN_MOSI    (23)
+#define CAL_LED_PIN_CLK     (18)
+#define CAL_LED_PIN_EN      (-1)
 
 #endif
