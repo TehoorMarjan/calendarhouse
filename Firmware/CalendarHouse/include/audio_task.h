@@ -23,9 +23,9 @@ public:
 private:
     AudioFileSourceSD _source;
     AudioGeneratorMP3 _decoder;
-    //AudioFileSourceBuffer _bufferstream;
+    AudioFileSourceBuffer* _pfsbuff;
     AudioOutputI2S _out;
-    //uint8_t _buffer[AUD_BUF_SIZE];
+    uint8_t _buffer[AUD_FS_BUF_SIZE];
     char _filename[32];
     uint8_t _codecbuffer[AUD_CODEC_BUF_SIZE];
 };

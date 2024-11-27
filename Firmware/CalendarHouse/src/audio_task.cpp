@@ -4,10 +4,12 @@
 AudioTask::AudioTask():
         _source(),
         _decoder(&_codecbuffer, AUD_CODEC_BUF_SIZE),
-        //_bufferstream(&_source, &_buffer, AUD_BUF_SIZE),
+        _pfsbuff(NULL),
         _out(0, AudioOutputI2S::INTERNAL_DAC) { }
 
-AudioTask::~AudioTask() { }
+AudioTask::~AudioTask() {
+    stop();
+}
 
 void AudioTask::setup() { }
 
@@ -15,7 +17,8 @@ void AudioTask::playDaily(uint8_t day) {
     stop();
     (void) sprintf(&_filename[0], "/daily/%d.mp3", day);
     if (_source.open(_filename)) {
-        _decoder.begin(&_source, &_out);
+        _pfsbuff = new AudioFileSourceBuffer(&_source, &_buffer, AUD_FS_BUF_SIZE),
+        _decoder.begin(_pfsbuff, &_out);
         Serial.printf("Playing %s\n", _filename);
     }
     else {
@@ -29,6 +32,10 @@ void AudioTask::stop() {
     }
     if (_source.isOpen()) {
         _source.close();
+    }
+    if (_pfsbuff != NULL) {
+        delete _pfsbuff;
+        _pfsbuff = NULL;
     }
     Serial.println("Stopped");
 }
