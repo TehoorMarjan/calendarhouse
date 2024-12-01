@@ -11,8 +11,6 @@ AudioTask::~AudioTask() {
     stop();
 }
 
-void AudioTask::setup() { }
-
 void AudioTask::playDaily(uint8_t day) {
     stop();
     (void) sprintf(&_filename[0], "/daily/%d.mp3", day);

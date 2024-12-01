@@ -13,7 +13,6 @@ class AudioTask {
 public:
     AudioTask(SDCardManager &sdCardManager);
     ~AudioTask();
-    void setup();
     void playDaily(uint8_t day);
     void playAlert(const char * name);
     void stop();
