@@ -27,7 +27,8 @@
 #define CAL_LED_PIN_EN      (-1)
 
 // Audio
-#define AUD_FS_BUF_SIZE     (20*1024)
-#define AUD_CODEC_BUF_SIZE  (20*0x600)
+#define I2S_PIN_DOUT        (25)
+#define I2S_PIN_BCLK        (27)
+#define I2S_PIN_LRC         (26)
 
 #endif

@@ -3,15 +3,15 @@
 
 #include <Arduino.h>
 #include "board.h"
+#include "sd_card.h"
 
-#include "AudioFileSourceSD.h"
-#include "AudioFileSourceBuffer.h"    //input buffer
-#include "AudioGeneratorMP3.h"        //decoder
-#include "AudioOutputI2S.h"           //output stream
+#include "Audio.h"
+#include "SD.h"
+#include "FS.h"
 
 class AudioTask {
 public:
-    AudioTask();
+    AudioTask(SDCardManager &sdCardManager);
     ~AudioTask();
     void setup();
     void playDaily(uint8_t day);
@@ -21,13 +21,9 @@ public:
     void loop();
 
 private:
-    AudioFileSourceSD _source;
-    AudioGeneratorMP3 _decoder;
-    AudioFileSourceBuffer* _pfsbuff;
-    AudioOutputI2S _out;
-    uint8_t _buffer[AUD_FS_BUF_SIZE];
+    Audio _audio;
+    SDCardManager& _sdCardManager;
     char _filename[32];
-    uint8_t _codecbuffer[AUD_CODEC_BUF_SIZE];
 };
 
 #endif

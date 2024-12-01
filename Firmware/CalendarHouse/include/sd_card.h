@@ -38,6 +38,8 @@ public:
 
     uint64_t usedSpaceMB() const;
 
+    SDFS& getSDFS();
+
 private:
     SPIClass _spi;
     SDFS &_sdfs;

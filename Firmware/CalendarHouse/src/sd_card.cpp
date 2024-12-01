@@ -66,3 +66,7 @@ uint64_t SDCardManager::usedSpaceMB() const
 {
     return _sdfs.usedBytes() / (1024 * 1024);
 }
+
+SDFS& SDCardManager::getSDFS() {
+  return _sdfs;
+}
